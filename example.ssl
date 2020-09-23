@@ -1,8 +1,14 @@
-function main(arg:integer):integer
-{
-	var a:integer;
-	var b:integer;
-	var c:integer;
-	b = 1;
-	c = 2;
-}
+function bubbleSort(inputArr) {
+    var len = inputArr.length;
+	var i:integer;
+	var j:integer;
+    for (i = 0; i < len; i++) {
+        for (j = 0; j < len; j++) {
+            if (inputArr[j] > inputArr[j + 1]) {
+                var tmp = inputArr[j];
+                inputArr[j] = inputArr[j + 1];
+                inputArr[j + 1] = tmp;
+            }
+        }
+    }
+};

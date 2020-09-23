@@ -177,6 +177,7 @@ def lexical_analysis(input_file, output_file):
 	while token != Words.EOF:
 		if LexError(token):
 			error = True
+			break
 		token = next_token()
 		
 	for t in tokens:
