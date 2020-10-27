@@ -1,17 +1,16 @@
-maxNestLevel = 64
-
 from typing import NewType
+from enum import Enum, auto
+
+maxNestLevel = 64
 
 ## Kind defines a kind
 Kind = NewType('Kind', int)
 Alias = NewType('Alias', int)
+
 ## Type defines the alias object type
 Type = NewType('Type', Alias)
 
 ## Kinds of Kind
-
-from enum import Enum, auto
-
 # Creating enumerations using class
 class Kinds(Enum):
     KindVar = auto()
@@ -29,21 +28,22 @@ class Kinds(Enum):
 def IsType(k):
 	return k == Kinds.KindArrayType or k == Kinds.KindStructType or k == Kinds.KindAliasType or k == Kinds.KindScalarType
 
-	IntObj  = Object{-1, nil, Kinds.KindScalarType, nil}
-	PIntObj = &IntObj
 
-	CharObj  = Object{-1, nil, Kinds.KindScalarType, nil}
-	PCharObj = &CharObj
+IntObj  = Object{-1, None, Kinds.KindScalarType, None}
+PIntObj = &IntObj
 
-	BoolObj  = Object{-1, nil, Kinds.KindScalarType, nil}
-	PBoolObj = &BoolObj
+CharObj  = Object{-1, None, Kinds.KindScalarType, None}
+PCharObj = &CharObj
 
-	StringObj  = Object{-1, nil, Kinds.KindScalarType, nil}
-	PStringObj = &StringObj
+BoolObj  = Object{-1, None, Kinds.KindScalarType, None}
+PBoolObj = &BoolObj
 
-	UniversalObj  = Object{-1, nil, Kinds.KindScalarType, nil}
-	PUniversalObj = &UniversalObj
-)
+StringObj  = Object{-1, None, Kinds.KindScalarType, None}
+PStringObj = &StringObj
+
+UniversalObj  = Object{-1, None, Kinds.KindScalarType, None}
+PUniversalObj = &UniversalObj
+
 
 ## Object defines a scope object
 class Object:
@@ -103,7 +103,7 @@ class Analyser:
 ## NewBlock opens a new block
 def NewBlock(a):
 	a.level+=1
-	a.symbolTable[a.level] = nil
+	a.symbolTable[a.level] = None
 	return a.level
 
 ## EndBlock ends a block
@@ -126,7 +126,7 @@ def DefineSymbol(a, name):
 def SearchLocalSymbol(a, name):
 	obj = a.symbolTable[a.level]
 
-	if obj != nil:
+	if obj != None:
 		if obj.Name == name:
 			return obj
 
@@ -139,7 +139,7 @@ def SearchGlobalSymbol(a, name):
 	for i in range (a.level,-1):
 		obj = a.symbolTable[i]
 
-		if obj != nil:
+		if obj != None:
 			if obj.Name == name:
 				return obj
 			obj = obj.Next
@@ -176,36 +176,35 @@ def CheckTypes(p1, p2):
 
 			f1 = s1.Fields
 			f2 = s2.Fields
-			##if f1 != nil and f2 != nil {
+			##if f1 != None and f2 != None {
 			##	// TODO
 			##}
 
 	return false
 
-def String():
-	var sb strings.Builder
+def String(o):
+	sb = ''
+	sb += "Kind: {} Name: {} Type: ".format(o.Kind, o.Name)
 
-	sb.WriteString(fmt.Sprintf("Kind: %v Name: %v Type: ", o.Kind, o.Name))
-	switch o.T.(type) {
-	case Alias:
-		sb.WriteString("Alias")
-	case Type:
-		sb.WriteString("Type")
-	case Array:
-		sb.WriteString("Array")
-	case Struct:
-		sb.WriteString("Struct")
-	case Function:
-		sb.WriteString("Function")
-	case Var:
-		sb.WriteString("Var")
-	case Param:
-		sb.WriteString("Param")
-	case Field:
-		sb.WriteString("Field")
+	if type(o) == Alias:
+		sb += 'Alias'
+	elif type(o) == Type:
+		sb += 'Type'
+	elif type(o) == Array:
+		sb += 'Array'
+	elif type(o) == Struct:
+		sb += 'Struct'
+	elif type(o) == Function:
+		sb += 'Function'
+	elif type(o) == Var:
+		sb += 'Var'
+	elif type(o) == Param:
+		sb += 'Param'
+	elif type(o) == Field:
+		sb += 'Field'
 	default:
-		sb.WriteString("INVALID")
+		sb += 'INVALID'
 	}
 
-	return sb.String()
+	return sb
 }
