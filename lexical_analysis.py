@@ -50,7 +50,13 @@ def get_const(n):
 	return -1
 
 
+def set_code(text):
+	global code
+	code = text
+
+
 def next_token():
+	global code
 	global next_char
 	global line
 
@@ -155,14 +161,7 @@ def next_token():
 	tokens.append(token)
 	if token in regular_tokens:
 		tokens.append(token_sec)
-	return token
-
-
-def LexError(token):
-	if token == Words.UNKNOWN:
-		print('Unexpected character in line ' + str(line))
-		return True
-	return False
+	return token, line
 
 
 def lexical_analysis(input_file, output_file):
@@ -175,7 +174,8 @@ def lexical_analysis(input_file, output_file):
 	token = next_token()
 	error = False
 	while token != Words.EOF:
-		if LexError(token):
+		if token == Words.UNKNOWN:
+			print('Unexpected character in line ' + str(line))
 			error = True
 			break
 		token = next_token()
@@ -187,6 +187,8 @@ def lexical_analysis(input_file, output_file):
 
 	if not error:
 		print('\nNo lexical errors\n')
+
+	return not error
 
 if __name__ == '__main__':
 	args = parse_args()

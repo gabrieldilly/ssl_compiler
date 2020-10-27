@@ -1,5 +1,6 @@
-function bubbleSort(inputArr) {
-    var len = inputArr.length;
+function bubbleSort(inputArr:integer):integer
+{
+    var len:integer = inputArr.length;
 	var i:integer;
 	var j:integer;
     for (i = 0; i < len; i++) {
@@ -11,4 +12,4 @@ function bubbleSort(inputArr) {
             }
         }
     }
-};
+}
